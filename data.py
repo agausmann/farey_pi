@@ -9,6 +9,9 @@ from pathlib import Path
 
 data_dir = Path(__file__).parent / 'data'
 
+"""Arbitrary precision approximate of pi."""
+PI = Decimal('3.14159265358979323846264338327950288419716939937510')
+
 
 class Approximation:
     """
@@ -34,13 +37,17 @@ class Approximation:
         """
         The left-hand side of the approximation.
         """
-        return Fraction(ln_base ** ln_exp, ld_base ** ld_exp)
+        return Fraction(
+            self.ln_base ** self.ln_exp,
+            self.ld_base ** self.ld_exp,
+        )
 
+    @property
     def rhs_frac(self) -> Fraction:
         """
         The fraction multiple of pi on the right-hand-side (pi excluded).
         """
-        return Fraction(rn, rd)
+        return Fraction(self.rn, self.rd)
 
     def __repr__(self):
         return '{}^{} / {}^{} = ({} / {}) * pi'.format(
